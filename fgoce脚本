@@ -1,0 +1,40 @@
+atk = 9175  --填入攻击力
+hp = 8890   --填入血量
+max = 1      --修改的从者数量
+
+openProcess ("NoxVMHandle.exe")--默认夜神模拟器，如果是其他模拟器请自行修改进程名或删除此行并手动选取
+--openProcess ("LdBoxHeadless.exe")--雷电模拟器进程，如果用的话注释第5行并删除这行的注释
+function MyAobScan(Bytes)
+local Scan = createMemScan();
+Scan.OnlyOneResult=true;
+Scan.firstScan(soExactValue, vtGrouped, rtTruncated, Bytes, "", 0, 0x00000001ffffffff, "", fsmNotAligned, "", true, false, false, false);
+Scan.waitTillDone();
+return Scan.getOnlyResult();
+end
+
+a=MyAobScan(string.format("BS:44 OOO:U 4:%d 4:%d 4:10000",atk,hp))
+if a==nil then print("未能搜寻到值,请确认第一二行填写是否正确或稍后再试") return end
+min=0
+
+while(max>min)do
+n = 0x2A8*min
+writeInteger(a-n,99999)            --修改攻击力
+--writeInteger(a-n+0x4,0)            --此项可使路人助战也可使用宝具
+writeInteger(a-n+0x28,0)           --0np释放宝具
+--writeInteger(a-n+0xD4,5)           --修改宝具等级
+writeInteger(a-n+0x0C,99999)       --修改当前血量（一般不用，需要使用的话删除开头的“--”）
+writeInteger(a-n+0x10,99999)       --修改最大血量（一般不用，需要使用的话删除开头的“--”）
+
+--[[
+local addressList = getAddressList()
+local a1 = addressList.createMemoryRecord()
+a1.setDescription(string.format("HP%d",min+1))
+a1.Address = a-n+0x0C
+a1.Active  = true
+--此段用于锁定HP,一般高难本才需要用到，因此平时可以注释掉
+--需要使用时在27行与35行开头再加上“--”,或删除27与35行即可
+--]]
+
+min = min+1
+end
+print("修改完成")
