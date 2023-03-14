@@ -22,8 +22,8 @@ writeInteger(a-n,99999)            --修改攻击力
 --writeInteger(a-n+0x4,0)            --此项可使路人助战也可使用宝具
 writeInteger(a-n+0x28,0)           --0np释放宝具
 --writeInteger(a-n+0xD4,5)           --修改宝具等级
---writeInteger(a-n+0x0C,99999)       --修改当前血量（一般不用，需要使用的话删除开头的“--”）
---writeInteger(a-n+0x10,99999)       --修改最大血量（一般不用，需要使用的话删除开头的“--”）
+writeInteger(a-n+0x0C,99999)       --修改当前血量（一般不用，需要使用的话删除开头的“--”）
+writeInteger(a-n+0x10,99999)       --修改最大血量（一般不用，需要使用的话删除开头的“--”）
 
 --[[
 local addressList = getAddressList()
