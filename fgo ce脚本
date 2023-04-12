@@ -13,7 +13,7 @@ return Scan.getOnlyResult();
 end
 
 a=MyAobScan(string.format("BS:44 OOO:U 4:%d 4:%d 4:10000",atk,hp))
-if a==nil then print("未能搜寻到值,请确认第一二行填写是否正确或稍后再试。") return end
+if a==nil then print("未能搜寻到值,请确认第一二行填写是否正确或稍后再试") return end
 min=0
 
 while(max>min)do
